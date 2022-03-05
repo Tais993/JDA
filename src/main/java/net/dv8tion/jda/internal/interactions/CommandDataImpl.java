@@ -255,4 +255,32 @@ public class CommandDataImpl implements SlashCommandData
                 .filter(it -> it.getType().getKey() > OptionType.SUB_COMMAND_GROUP.getKey())
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public boolean equals(final Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        final CommandDataImpl that = (CommandDataImpl) o;
+
+        if (defaultPermissions != that.defaultPermissions) return false;
+        if (allowRequired != that.allowRequired) return false;
+        if (options != null ? !options.equals(that.options) : that.options != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        return type == that.type;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = options != null ? options.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (defaultPermissions ? 1 : 0);
+        result = 31 * result + (allowRequired ? 1 : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        return result;
+    }
 }
